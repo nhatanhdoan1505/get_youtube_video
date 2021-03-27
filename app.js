@@ -27,7 +27,7 @@ app.use(cors());
 app.post("/api/keyword", (request, respose) => {
   let endpoint;
   if (request.body.keyword) {
-    endpoint = `https://www.youtube.com/results?search_query=${urlencode(
+    endpoint = `https://www.youtube.com/resultssearch_query=${urlencode(
       request.body.keyword
     )}`;
     requests(endpoint, (err, res, html) => {
@@ -53,10 +53,10 @@ app.post("/api/keyword", (request, respose) => {
         .map(channel => channel.channelRenderer)
         .map((channel) => {
           return {
-            thumbnail: channel?.thumbnail?.thumbnails[1]?.url,
+            thumbnail: channel.thumbnail.thumbnails[1].url,
             url:
-              channel?.navigationEndpoint?.commandMetadata?.webCommandMetadata
-                ?.url,
+              channel.navigationEndpoint.commandMetadata.webCommandMetadata
+                .url,
           };
         });
 
@@ -69,24 +69,24 @@ app.post("/api/keyword", (request, respose) => {
         })
         .map((video) => {
           let channel_thumnail = channels_array.filter(channel => {
-            return channel.url === video?.ownerText?.runs[0]?.navigationEndpoint?.commandMetadata
-            ?.webCommandMetadata?.url
+            return channel.url === video.ownerText.runs[0].navigationEndpoint.commandMetadata
+            .webCommandMetadata.url
           });
           return {
-            videoId: video?.videoId,
+            videoId: video.videoId,
             videoURl:
-              video?.navigationEndpoint?.commandMetadata?.webCommandMetadata
-                ?.url,
-            thumbnail: video?.thumbnail?.thumbnails[1]?.url,
-            title: video?.title?.runs[0]?.text,
-            descriptionSnippet: video?.descriptionSnippet?.runs[0].text,
-            publishedTimeText: video?.publishedTimeText?.simpleText,
-            lengthText: video?.lengthText?.simpleText,
-            viewCountText: video?.viewCountText?.simpleText,
-            channelTitle: video?.ownerText?.runs[0]?.text,
+              video.navigationEndpoint.commandMetadata.webCommandMetadata
+                .url,
+            thumbnail: video.thumbnail.thumbnails[1].url,
+            title: video.title.runs[0].text,
+            descriptionSnippet: video.descriptionSnippet.runs[0].text,
+            publishedTimeText: video.publishedTimeText.simpleText,
+            lengthText: video.lengthText.simpleText,
+            viewCountText: video.viewCountText.simpleText,
+            channelTitle: video.ownerText.runs[0].text,
             channelUrl:
-              video?.ownerText?.runs[0]?.navigationEndpoint?.commandMetadata
-                ?.webCommandMetadata?.url,
+              video.ownerText.runs[0].navigationEndpoint.commandMetadata
+                .webCommandMetadata.url,
             channelThumnail: channel_thumnail[0].thumbnail
           };
         });
