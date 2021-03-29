@@ -17,7 +17,7 @@ app.use(express.static(__dirname + "/public"));
 // Express body-Parser
 app.use(
   bodyParser.urlencoded({
-    extended: true,
+    extended: false,
   })
 );
 app.use(bodyParser.json());
